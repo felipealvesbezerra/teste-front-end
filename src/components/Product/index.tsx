@@ -1,24 +1,26 @@
-import { Formik } from 'formik';
-import React, { useEffect, useState } from 'react';
-import { FiDatabase, FiDollarSign, FiPlus, FiPlusSquare } from 'react-icons/fi';
-import { useDispatch, useSelector } from 'react-redux';
+/* eslint-disable no-underscore-dangle */
+import { Field, Formik } from 'formik';
+import React, { useState } from 'react';
+import { FiDatabase, FiDollarSign, FiEdit, FiXCircle } from 'react-icons/fi';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
-import Input from '../../components/Input';
-import Product from '../../components/Product';
-import {
-  addProduct,
-  fetchProducts,
-  selectProducts,
-} from '../../logic/redux/slices/products';
-import { AppDispatch } from '../../logic/redux/store';
+import { deleteProduct, editProduct } from '../../logic/redux/slices/products';
+import { IProduct } from '../../logic/redux/slices/products/types';
+import formatValue from '../../utils/formatValue';
+import Input from '../Input';
 import {
   Container,
-  ProductsCatalog,
+  SubTitle,
   Title,
-  NewProduct,
-  NovoProdutoForm,
+  Price,
+  Description,
+  Options,
+  EditableContainer,
 } from './styles';
 
+interface ProductProps {
+  product: IProduct;
+}
 const schema = Yup.object({
   nome: Yup.string().required('Este campo e obrigatorio'),
   modelo: Yup.string().required('Este campo é obrigatório'),
@@ -32,48 +34,53 @@ const schema = Yup.object({
   descricao: Yup.string().required('Este campo é obrigatório'),
 });
 
-const Catalog: React.FC = () => {
-  const { status: productsState, value: products } = useSelector(
-    selectProducts,
-  );
-  const dispatch = useDispatch<AppDispatch>();
-  const [isNewProductVisible, setIsNewProductVisible] = useState<boolean>(
-    false,
-  );
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+const Product: React.FC<ProductProps> = ({ product }) => {
+  const [toggle, setToggle] = useState<boolean>(false);
+  const [editableVisible, setEditableVisible] = useState<boolean>(false);
+  const dispatch = useDispatch();
   return (
     <Container>
-      <Title>Produtos</Title>
-      <ProductsCatalog>
-        {products.map(product => (
-          // eslint-disable-next-line no-underscore-dangle
-          <Product key={product._id} product={product} />
-        ))}
-      </ProductsCatalog>
+      <main>
+        <Options>
+          <FiEdit
+            size={20}
+            color="green"
+            onClick={() => setEditableVisible(!editableVisible)}
+          />
+          <FiXCircle
+            onClick={() => dispatch(deleteProduct(product._id))}
+            color="red"
+            size={20}
+          />
+        </Options>
+        <Title>{product.nome}</Title>
+        <SubTitle>{product.modelo}</SubTitle>
+        <img src={product.link_foto} alt={product.nome} />
+        <Price>{formatValue(parseFloat(product.preco))}</Price>
+        <Description visible={toggle}>
+          {product.marca}
 
-      <NewProduct onClick={() => setIsNewProductVisible(!isNewProductVisible)}>
-        <FiPlusSquare size={30} color="green" />
-        Novo Produto
-      </NewProduct>
-      <NovoProdutoForm visible={isNewProductVisible}>
+          <div>{product.descricao}</div>
+          <button type="button" onClick={() => setToggle(!toggle)}>
+            {!toggle ? 'Ver Detalhes' : 'Ocultar Detalhes'}
+          </button>
+        </Description>
+      </main>
+      <EditableContainer visible={editableVisible}>
         <Formik
           initialValues={{
-            nome: '',
-            modelo: '',
-            link_foto: '',
-            preco: '',
-            marca: '',
-            descricao: '',
+            nome: product.nome,
+            modelo: product.modelo,
+            link_foto: product.link_foto,
+            preco: product.preco,
+            marca: product.marca,
+            descricao: product.descricao,
           }}
           validationSchema={schema}
           onSubmit={(values, { setSubmitting }) => {
-            dispatch(addProduct(values));
-            setTimeout(() => {
-              dispatch(fetchProducts());
-            }, 1000);
+            dispatch(editProduct({ _id: product._id, ...values }));
             setSubmitting(false);
+            setEditableVisible(false);
           }}
         >
           {({
@@ -158,14 +165,14 @@ const Catalog: React.FC = () => {
                 touched={touched.preco || false}
               />
               <button type="submit" disabled={isSubmitting}>
-                Enviar Dados
+                Editar Dados
               </button>
             </form>
           )}
         </Formik>
-      </NovoProdutoForm>
+      </EditableContainer>
     </Container>
   );
 };
 
-export default Catalog;
+export default Product;
