@@ -32,7 +32,7 @@ export class CrudService {
 
   //Delete product
   public delete(_id: string): Observable<Crud> {
-    return this.http.delete<Crud>(`/api/products/${_id}/delete`);
+    return this.http.delete<Crud>(`${this.url}/products/${_id}/delete`);
   }
 
 
