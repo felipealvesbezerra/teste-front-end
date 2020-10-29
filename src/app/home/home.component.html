@@ -1,0 +1,211 @@
+<div class="content">
+
+    <div class="row">
+
+        <div class="col-md-12 d-flex justify-content-center">
+
+            <button class="btn btn-primary d-block" routerLink="/new"><i class="la la-plus"></i>Novo Produto</button>
+
+        </div>
+
+    </div>
+
+    <div class="row d-flex justify-content-center mt-4">
+
+        <div class="col-md-8">
+
+            <div class="row mt-4">
+
+                <div class="col-md-12">
+
+                    <div class="text-center mt-4 mb-4" *ngIf="list_products?.length==0">
+
+                        <h4>Nenhum produto cadastrado.</h4>
+
+                    </div>
+
+                    <div class="table-responsive" *ngIf="list_products?.length>0">
+
+                        <table class="table table-hover">
+
+                            <thead>
+
+                                <th>Nome</th>
+
+                                <th>Marca</th>
+
+                                <th>Modelo</th>
+
+                                <th>Preço</th>
+
+                                <th>Ação</th>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr *ngFor="let item of list_products | paginate: { itemsPerPage: 5, currentPage: p }">
+
+                                    <td>{{item?.nome}}</td>
+
+                                    <td>{{item?.marca}}</td>
+
+                                    <td>{{item?.modelo}}</td>
+
+                                    <td>R$ {{item?.preco | currency:" "}}</td>
+
+                                    <td>
+                                        <button class="btn btn-primary mr-1" placement="auto"
+                                            (click)="open(content,item)" ngbTooltip="Editar produto"><i
+                                                class="la la-edit"></i></button>
+
+                                        <button (click)="deleteProduct(item?._id)" class="btn btn-danger"
+                                            placement="auto" ngbTooltip="Excluir produto"><i
+                                                class="la la-trash"></i></button>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                        <div class="d-flex justify-content-center mt-4" *ngIf="list_products?.length>5">
+
+                            <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Próximo">
+                            </pagination-controls>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<ng-template #content let-modal>
+
+    <div class="modal-header">
+
+        <h4 class="modal-title" id="modal-basic-title">Atualizar Produto</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+
+            <span aria-hidden="true">&times;</span>
+
+        </button>
+
+    </div>
+
+    <div class="modal-body">
+
+        <form [formGroup]="formNew">
+
+            <div class="row mt-4">
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label>Nome*</label>
+
+                        <input class="form-control" placeholder="Insira o nome" formControlName="name">
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label>Marca*</label>
+
+                        <input class="form-control" placeholder="Insira a marca" formControlName="brand">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label [ngClass]="price_required===false?'text-danger':' '">Preço*</label>
+
+                        <input [ngClass]="price_required===false?'error':' '" currencyMask class="form-control"
+                            placeholder="Insira o preço" (keyup)="verifyPass()" formControlName="price"
+                            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' } ">
+                        <small *ngIf="price_required===false" class="text-danger">*O Campo
+                            preço é obrigatório.</small>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label>Modelo*</label>
+
+                        <input class="form-control" placeholder="Insira o modelo" formControlName="model">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <div class="form-group">
+
+                        <label>Link da foto</label>
+
+                        <input class="form-control" placeholder="Insira o Link da foto" formControlName="link">
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-12">
+
+                    <div class="form-group">
+
+                        <label>Descrição</label>
+
+                        <textarea class="form-control" placeholder="Insira a descrição"
+                            formControlName="description"></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="modal-footer d-flex justify-content-center">
+
+        <button class="btn" [disabled]="formNew.invalid" [ngClass]="formNew.valid?'btn-primary':'btn-secondary'"
+            (click)="updateProduct()">Atualizar
+            Produto</button>
+    </div>
+
+</ng-template>

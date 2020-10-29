@@ -1,0 +1,127 @@
+<div class="content">
+
+    <div class="row d-flex justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="row">
+
+                <div class="col-md-12 text-center">
+
+                    <button class="btn btn-primary" routerLink="/home"><i class="la la-list"></i>Listar
+                        Produtos</button>
+
+                </div>
+
+            </div>
+
+            <form [formGroup]="formNew">
+
+                <div class="row mt-4">
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+
+                            <label>Nome*</label>
+
+                            <input class="form-control" placeholder="Insira o nome" formControlName="name">
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+
+                            <label>Marca*</label>
+
+                            <input class="form-control" placeholder="Insira a marca" formControlName="brand">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+
+                            <label [ngClass]="price_required===false?'text-danger':' '">Preço*</label>
+
+                            <input [ngClass]="price_required===false?'error':' '" currencyMask class="form-control"
+                                placeholder="Insira o preço" (keyup)="verifyPass()" formControlName="price"
+                                [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' } ">
+                            <small *ngIf="price_required===false" class="text-danger">*O Campo
+                                preço é obrigatório.</small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+
+                            <label>Modelo*</label>
+
+                            <input class="form-control" placeholder="Insira o modelo" formControlName="model">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class="form-group">
+
+                            <label>Link da foto</label>
+
+                            <input class="form-control" placeholder="Insira o Link da foto" formControlName="link">
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12">
+
+                        <div class="form-group">
+
+                            <label>Descrição</label>
+
+                            <textarea class="form-control" placeholder="Insira a descrição"
+                                formControlName="description"></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+
+                        <button class="btn" [disabled]="formNew.invalid"
+                            [ngClass]="formNew.valid?'btn-primary':'btn-secondary'" (click)="createProduct()">Cadastrar
+                            Produto</button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
