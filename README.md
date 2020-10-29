@@ -16,7 +16,7 @@ Second Step:
 
   Enjoy!
 
-  ## You like the run production build?
+  ## Would you like the run production build?
   ```bash
     yarn build
     or
