@@ -1,0 +1,56 @@
+<main class="container-fluid">
+    <header>
+        <h2 class="text-center m-4">Excluir produto</h2>
+    </header>
+
+    <section class="row justify-content-center">
+
+        <article class="col-md-5 col-sm-8 articleForm">
+
+            <article>
+                <button type="button" class="close m-2" data-dismiss="modal" aria-label="Close" routerLink="/products">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </article>
+
+
+            <form class="form mt-5 w-100">
+
+                <article class="form-group w-100 w-100 d-flex">
+                    <input name="nome" class="form-control " placeholder="Nome" disabled [(ngModel)]="product.nome">
+
+                    <input name="marca" class="form-control ml-1" placeholder="Marca " disabled [(ngModel)]="product.marca ">
+
+                </article>
+
+                <article class="form-group w-100 ">
+                    <input name="modelo " class="form-control " placeholder="Modelo " disabled [(ngModel)]="product.modelo ">
+                </article>
+
+                <article class="form-group w-100 ">
+                    <input name="preco " class="form-control " placeholder="Preço " disabled [(ngModel)]="product.preco ">
+                </article>
+
+                <article class="form-group w-100 ">
+                    <input name="descricao " class="form-control " placeholder="Descrição " disabled [(ngModel)]="product.descricao ">
+                </article>
+
+                <article class="form-group w-100 ">
+                    <input name="link_foto " class="form-control " placeholder="Link da imagem " disabled [(ngModel)]="product.link_foto ">
+                </article>
+
+                <article class=" d-flex justify-content-end">
+                    <button class="btn btn-danger button w-25" (click)="deleteProduct()">Excluir</button>
+                </article>
+
+            </form>
+
+        </article>
+
+    </section>
+
+
+
+
+
+</main>
