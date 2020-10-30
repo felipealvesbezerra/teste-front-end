@@ -9,44 +9,50 @@ import { Product } from './product.model';
 })
 export class ProductService {
 
-    baseUrl = "http://localhost:3003/products";
-
-
-  constructor(private http: HttpClient) { }
-
+  alerta: boolean = false;
+   
+    constructor(private http: HttpClient) { }
 
 
 //Ler a lista de produtos
   read(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.baseUrl);
+    return this.http.get<Product[]>("http://ec2-52-203-6-72.compute-1.amazonaws.com:8000/products/list");
 
   }
 
   //Ler um ID que fo passado como parâmetro
-  readById(id:string): Observable<Product> {
-    const url = `${this.baseUrl}/${id}`
+  readById(_id:string): Observable<Product> {
+    const url = `http://ec2-52-203-6-72.compute-1.amazonaws.com:8000/products/${_id}`
     return this.http.get<Product>(url)
   }
 
   //Criar um produto
-  create(product: Product): Observable<Product> {
-    return this.http.post<Product>(this.baseUrl, product)
+  create(product: Product): Observable<string> {
+    return this.http.post<string>("http://ec2-52-203-6-72.compute-1.amazonaws.com:8000/products/create", product)
    }
 
 
    //Atualizar formulário
-  update(product: Product): Observable<Product> {
-    const url = `${this.baseUrl}/${product.id}`
-    return this.http.put<Product>(url,product)
+  update(product: Product): Observable<string> {
+    const url = `http://ec2-52-203-6-72.compute-1.amazonaws.com:8000/products/${product._id}/update`
+    return this.http.put<string>(url,product);
   }
   
-
   //Deletar o produto
-  delete(id: number): Observable<Product> {
-    const url = `${this.baseUrl}/${id}`
-    return this.http.delete<Product>(url);
+  delete(_id: string): Observable<string> {
+        const url =`http://ec2-52-203-6-72.compute-1.amazonaws.com:8000/products/${_id}/delete` 
+      return this.http.delete<string>(url);
   }
 
+  // //Mostrar mensagem
+  // showMensage(msg: string){
+  //   if(this.alerta == true){
+  //     this.showMensage(msg);
+  //   }
+  //   else {
+  //     alert("Tente novamente!");
+  //   }
+  // }
      
     
   

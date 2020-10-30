@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../product.model';
 import { ProductService } from '../../product.service';
 import {faEdit} from '@fortawesome/free-regular-svg-icons'
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,14 +17,14 @@ export class ProductReadComponent implements OnInit {
   product: Product[];
   
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService,private router: Router) { }
 
   ngOnInit(): void {
     window.scroll(0, 0);
     
     this.productService.read().subscribe((resp: Product[]) => {
       this.product = resp;
-      console.log(this.product)      
+            
     });
     
 

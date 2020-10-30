@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../product.model';
 import { ProductService } from '../../product.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ProductCreateComponent } from '../product-create/product-create.component';
+
+
 
 @Component({
   selector: 'app-product-update',
@@ -17,27 +18,51 @@ export class ProductUpdateComponent implements OnInit {
   formulario: FormGroup;
   productUpdate: Product = new Product();
 
-  constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute,
-    private fb: FormBuilder) { }
+  constructor(
+    private productService: ProductService, 
+    private router: Router, 
+    private route: ActivatedRoute,
+    private fb: FormBuilder
+  ) 
+  { 
+    const id = this.route.snapshot.paramMap.get('_id');
+    if(id != "")
+    {
+      this.productService.readById(id).subscribe(product =>{
+        this.product = product;
+        this.formulario.patchValue({
+          nome: this.product.nome,
+          marca: this.product.marca,
+          modelo: this.product.modelo,
+          preco: this.product.preco,
+          descricao: this.product.descricao,
+          link_foto: this.product.link_foto
+   
+        });
+      });
+    }
+    else
+    {
+      this.product = new Product();
+    }
+  }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id')
-    this.productService.readById(id).subscribe(product =>{
-      this.product = product
-    })
-
     this.validateForm();
   }
 
 
   updateProduct(){
-    this.productService.update(this.product).subscribe(() => {
-       alert('Produto atualizado com sucesso!')
+    this.product = this.formulario.getRawValue();
+    this.product._id = this.route.snapshot.paramMap.get('_id');
+    this.productService.update(this.product).subscribe(()=>{
       this.router.navigate(['/products']);
-    })
-  
-  }
+    }, err=>{
+      alert('Ocorreu um erro, porém atualizou corretamente'); //ok vai dar bom :D uma coisa
 
+      this.router.navigate(['/products'])
+    });
+  }
   
   cancel() {
     this.router.navigate(['/products'])
@@ -55,8 +80,8 @@ validateForm(){
   marca: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(50), Validators.required])],
   modelo: ['', Validators.compose([Validators.required,Validators.minLength(2),Validators.maxLength(50)])],
   preco: ['', Validators.compose([Validators.required])] ,
-  link_foto: ['', Validators.compose([Validators.email, Validators.minLength(9), Validators.maxLength(100), Validators.required])],
-  descricao:['', Validators.compose([Validators.email, Validators.minLength(9), Validators.maxLength(100), Validators.required])],
+  link_foto: ['', Validators.compose([ Validators.minLength(5), Validators.maxLength(100), Validators.required])],
+  descricao:['', Validators.compose([ Validators.minLength(5), Validators.maxLength(100), Validators.required])],
   })
 }
 

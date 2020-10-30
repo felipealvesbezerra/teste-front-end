@@ -1,26 +1,27 @@
-main {
-    background-image: url("../../../assets/img/fundTec.jpg");
-    background-attachment: local;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100vmax;
-    opacity: 0.85;
-    -moz-opacity: 1.0;
-}
-
-.container-fluid {
-    min-height: 81vh;
-}
-
-.button {
-    font-size: 20px;
-    width: 12rem;
-    height: 5rem;
-    background-color: #bf7015;
-    color: white;
-}
-
-.button:hover {
-    background-color: white;
-    color: #bf7015;
-}
+    main {
+        background-image: url("../../../assets/img/fundTec.jpg");
+        background-attachment: initial;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        height: 100%;
+        opacity: 0.85;
+        margin: 0;
+    }
+    
+    .container-fluid {
+        min-height: 81vh;
+    }
+    
+    .button {
+        font-size: 20px;
+        width: 12rem;
+        height: 5rem;
+        background-color: #bf7015;
+        color: white;
+    }
+    
+    .button:hover {
+        background-color: white;
+        color: #bf7015;
+    }
