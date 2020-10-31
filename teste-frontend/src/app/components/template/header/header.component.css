@@ -9,6 +9,10 @@
     text-decoration: none;
 }
 
+.header a:visited {
+    color: #000;
+}
+
 .header .logo {
     max-height: 32px;
 }
