@@ -1,0 +1,53 @@
+<main class="container-fluid">
+
+    <header>
+        <h1 class="text-center p-4">Lista de Produtos</h1>
+    </header>
+
+    <section class="row justify-content-around">
+
+
+        <section class="card shadow col-md-3" data-aos="zoom-in-right" style="width: 18rem;" *ngFor="let p of product">
+
+            <article class="mt-2">
+                <a routerLink="/products/update/{{p._id}}">
+                    <fa-icon [icon]='faEdit' class="faEdit c-point icon "></fa-icon>
+                </a>
+
+                <button type="button" class="close m-2" data-dismiss="modal" aria-label="Close" routerLink="/products/delete/{{p._id}}">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </article>
+
+
+            <img src=" {{p.link_foto}}" class="card-img-top imagens-card mb-2" alt="{{p.nome}}">
+
+            <div class="card-body ">
+
+                <h5 class="card-title text-center ">{{p.nome}}</h5>
+                <p class="card-text ">
+                    <strong>Marca: </strong> {{p.marca}}
+                </p>
+
+                <p class="card-text "><strong>Modelo: </strong>{{p.modelo}}
+                </p>
+
+                <p class="card-text ">
+                    <strong>descrição: </strong> <span>{{p.descricao}}</span>
+                </p>
+
+                <p><strong>Preço: </strong>{{p.preco | currency: 'BRL'}}</p>
+
+                <div class="my-3 d-flex justify-content-around ">
+                    <a class=" c-point btn btn-primary w-50 btCompra ">Comprar</a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </section>
+
+
+</main>

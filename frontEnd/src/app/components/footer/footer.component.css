@@ -1,0 +1,14 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.footer {
+    position: static;
+    bottom: 0;
+    color: white;
+    padding: 12px;
+    width: 100% !important;
+    background-color: #343a40!important;
+}

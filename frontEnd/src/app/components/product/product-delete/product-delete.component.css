@@ -1,0 +1,16 @@
+.articleForm {
+    border: 1px solid;
+    margin-bottom: 20px;
+    box-shadow: 5px 5px #0000009f;
+    border-radius: 10px;
+}
+
+.form {
+    width: 35vw;
+    margin: 0 auto;
+}
+
+.button {
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
