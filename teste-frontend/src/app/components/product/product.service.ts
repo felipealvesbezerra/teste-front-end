@@ -21,6 +21,12 @@ export class ProductService {
     })
   }
 
+  read(): Observable<Product[]>{
+    const url = `${this.baseUrl}/list`;
+    return this.http.get<Product[]>(url);
+  }
+
+
   create(product: Product): Observable<Product> {
     const url = `${this.baseUrl}/create`;
     return this.http.post<Product>(url, product, {responseType: 'text' as 'json'});
