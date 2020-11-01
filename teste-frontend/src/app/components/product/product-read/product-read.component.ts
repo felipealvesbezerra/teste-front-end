@@ -26,7 +26,7 @@ export class ProductReadComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     this.dataSource = new ProductReadDataSource();
     this.productService.read().subscribe(product => {
-      this.dataSource.data = product
+      this.dataSource.data = product;
       })
   }
 
