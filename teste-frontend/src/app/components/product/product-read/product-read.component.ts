@@ -17,7 +17,7 @@ export class ProductReadComponent implements AfterViewInit, OnInit {
   @ViewChild(MatTable) table: MatTable<Product>;
   dataSource: ProductReadDataSource;
 
-  displayedColumns = ['nome', 'marca', 'modelo', 'preco'];
+  displayedColumns = ['nome', 'marca', 'modelo', 'preco', 'acao'];
 
   constructor(private productService: ProductService) {
 

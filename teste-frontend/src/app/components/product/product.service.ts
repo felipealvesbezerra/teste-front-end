@@ -32,4 +32,14 @@ export class ProductService {
     return this.http.post<Product>(url, product, {responseType: 'text' as 'json'});
   }
 
+  readById(id: string): Observable<Product> {
+    const url = `${this.baseUrl}/${id}`;
+    return this.http.get<Product>(url);
+  }
+
+  update(product: Product): Observable<Product> {
+    const url = `${this.baseUrl}/${product.id}/update`;
+    return this.http.put<Product>(url, product, {responseType: 'text' as 'json'});
+  }
+
 }
