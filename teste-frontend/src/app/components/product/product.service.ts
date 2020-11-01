@@ -42,4 +42,9 @@ export class ProductService {
     return this.http.put<Product>(url, product, {responseType: 'text' as 'json'});
   }
 
+  delete(id: string): Observable<Product>{
+    const url = `${this.baseUrl}/${id}/delete`;
+    return this.http.delete<Product>(url, {responseType: 'text' as 'json'});
+  }
+
 }
