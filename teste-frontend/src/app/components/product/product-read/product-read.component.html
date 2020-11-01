@@ -24,7 +24,7 @@
       <ng-container matColumnDef="acao">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Ações</th>
         <td mat-cell *matCellDef="let row">
-          <a routerLink="" class="edit">
+          <a routerLink="/products/{{ row._id }}/update" class="edit">
             <i class="material-icons">
               edit
             </i>

@@ -38,7 +38,7 @@ export class ProductService {
   }
 
   update(product: Product): Observable<Product> {
-    const url = `${this.baseUrl}/${product.id}/update`;
+    const url = `${this.baseUrl}/${product._id}/update`;
     return this.http.put<Product>(url, product, {responseType: 'text' as 'json'});
   }
 
