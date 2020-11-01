@@ -17,3 +17,13 @@ body {
 .v-middle {
     vertical-align: middle;
 }
+
+.msg-success {
+  background-color: #28A745;
+  color: #fff;
+}
+
+.msg-fail {
+  background-color: #e35e6b;
+  color: #fff;
+}
